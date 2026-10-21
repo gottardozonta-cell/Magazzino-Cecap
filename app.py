@@ -97,14 +97,17 @@ file_excel = st.sidebar.file_uploader(
     "Oppure carica direttamente un file Excel (.xlsx):",
     type=["xlsx"],
 )
+
+# IL VALORE PREDEFINITO ORA È 1
 riga_intestazioni = st.sidebar.number_input(
     "Riga che contiene le intestazioni delle colonne:",
     min_value=1,
     max_value=50,
-    value=2,
+    value=1,
     step=1,
-    help="Nel file originale le intestazioni sono nella riga 2.",
+    help="Impostato di base sulla riga 1. Cambialo solo se le intestazioni sono più in basso.",
 )
+
 if st.sidebar.button("Ricarica dati da Google"):
     leggi_da_url.clear()
 
