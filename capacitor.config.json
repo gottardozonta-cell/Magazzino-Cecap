@@ -1,0 +1,6 @@
+{
+  "appId": "com.cecap.magazzino",
+  "appName": "Magazzino-Cecap",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
