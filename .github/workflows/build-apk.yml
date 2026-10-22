@@ -1,35 +1,46 @@
 name: Build APK Magazzino
+
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "master" ]
+    branches: [main, master]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Scarica codice
+        uses: actions/checkout@v4
+
+      - name: Configura Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: actions/setup-java@v4
+
+      - name: Configura Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: "17"
+
       - name: Installa dipendenze
-        run: |
-          npm install
-          npm install xlsx papaparse @capacitor/core @capacitor/cli @capacitor/android
-      - name: Build Web
+        run: npm install
+
+      - name: Compila app web
         run: npm run build
-      - name: Crea Android
+
+      - name: Crea progetto Android
         run: |
-          npx cap add android || true
-          npx cap copy android
-      - name: Compila APK
+          npx cap add android
+          npx cap sync android
+
+      - name: Genera APK debug
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
+
       - name: Salva APK
         uses: actions/upload-artifact@v4
         with:
